@@ -2,10 +2,11 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'multi_view_app.dart';
 import 'nice_chart.dart';
 
 void main() {
-  runApp(const MyApp());
+  runWidget(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -13,6 +14,10 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return MultiViewApp(viewBuilder: _buildView);
+  }
+
+  Widget _buildView(BuildContext context) {
     return const MaterialApp(
       home: ChartPage(),
     );
