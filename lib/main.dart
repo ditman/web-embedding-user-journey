@@ -1,5 +1,5 @@
-import 'dart:async';
-import 'dart:math';
+import 'dart:js_interop';
+import 'dart:ui_web' as ui_web;
 
 import 'package:flutter/material.dart';
 import 'multi_view_app.dart';
@@ -18,36 +18,23 @@ class MyApp extends StatelessWidget {
   }
 
   Widget _buildView(BuildContext context) {
-    return const MaterialApp(
-      home: ChartPage(),
+    final double valueFromJs = _getValueFromJs(context);
+    return MaterialApp(
+      home: ChartPage(value: valueFromJs),
     );
   }
-}
 
-class ChartPage extends StatefulWidget {
-  const ChartPage({super.key});
-
-  @override
-  State<StatefulWidget> createState() {
-    return ChartPageState();
+  double _getValueFromJs(BuildContext context) {
+    final int viewId = View.of(context).viewId;
+    // The following is web-only code, and would crash in mobile...
+    final Object? initialData = ui_web.views.getInitialData(viewId).dartify();
+    return (initialData as Map)['value'] as double;
   }
 }
 
-class ChartPageState extends State<ChartPage> {
-  late double value;
-  late Timer timer;
-
-  double _computeValue() => Random().nextDouble() * 100;
-
-  ChartPageState() {
-    // The value should come from JavaScript.
-    value = _computeValue();
-    timer = Timer.periodic(const Duration(seconds: 1), (Timer t) {
-      setState(() {
-        value = _computeValue();
-      });
-    });
-  }
+class ChartPage extends StatelessWidget {
+  const ChartPage({super.key, required this.value});
+  final double value;
 
   @override
   Widget build(BuildContext context) {
@@ -58,11 +45,5 @@ class ChartPageState extends State<ChartPage> {
         ),
       ),
     );
-  }
-
-  @override
-  void deactivate() {
-    super.deactivate();
-    timer.cancel();
   }
 }
