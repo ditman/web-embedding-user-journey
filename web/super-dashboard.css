@@ -1,0 +1,28 @@
+* {
+  font-family: sans-serif;
+  box-sizing: border-box;
+  margin: 0px;
+  padding: 0px;
+}
+body { padding: 10px; }
+h1 { margin-bottom: 20px; }
+h1, h2 { text-align: center; }
+
+.grid {
+  display: grid;
+  gap: 10px;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.cell {
+  border: 2px solid grey;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.chart {
+  background: #ddd;
+  min-height: 10px;
+}
