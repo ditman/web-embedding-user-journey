@@ -23,6 +23,11 @@ function onFlutterAppReady(app) {
       initialData: {
         value: parseInt(container.dataset.value, 10),
       },
+      // Make Flutter participate in the layout of the page.
+      viewConstraints: {
+        minHeight: 10,
+        maxHeight: 200,
+      }
     });
   });
 }

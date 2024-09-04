@@ -20,9 +20,9 @@ h1, h2 { text-align: center; }
   display: flex;
   flex-direction: column;
   gap: 5px;
+  overflow: hidden; /* Allow charts to shrink. */
 }
 
 .chart {
   background: #ddd;
-  min-height: 10px;
 }
