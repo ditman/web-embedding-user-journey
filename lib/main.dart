@@ -1,7 +1,7 @@
-import 'dart:js_interop';
 import 'dart:ui_web' as ui_web;
 
 import 'package:flutter/material.dart';
+import 'chart_initial_data.js.dart';
 import 'multi_view_app.dart';
 import 'nice_chart.dart';
 
@@ -27,8 +27,9 @@ class MyApp extends StatelessWidget {
   double _getValueFromJs(BuildContext context) {
     final int viewId = View.of(context).viewId;
     // The following is web-only code, and would crash in mobile...
-    final Object? initialData = ui_web.views.getInitialData(viewId).dartify();
-    return (initialData as Map)['value'] as double;
+    final ChartInitialData data =
+        ui_web.views.getInitialData(viewId) as ChartInitialData;
+    return data.value;
   }
 }
 
